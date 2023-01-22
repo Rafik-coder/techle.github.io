@@ -1,41 +1,98 @@
 <?php
-  /**
-  * Requires the "PHP Email Form" library
-  * The "PHP Email Form" library is available only in the pro version of the template
-  * The library should be uploaded to: vendor/php-email-form/php-email-form.php
-  * For more info and help: https://bootstrapmade.com/php-email-form/
-  */
+  // echo "hey";
+  $access_token = 'e44dc61e91f4b892933b905641f6b6dad8459a9508853aad81bff995852b20a3';
+  $base_id = 'app6HRkzWCCseRIBS';
+  $table_name = 'techle_news_letter';
 
-  // Replace contact@example.com with your real receiving email address
-  $receiving_email_address = 'contact@example.com';
+  $name = $_POST['q5_typeA'];
+  $email = $_POST['q4_email'];
 
-  if( file_exists($php_email_form = '../assets/vendor/php-email-form/php-email-form.php' )) {
-    include( $php_email_form );
-  } else {
-    die( 'Unable to load the "PHP Email Form" Library!');
-  }
-
-  $contact = new PHP_Email_Form;
-  $contact->ajax = true;
-  
-  $contact->to = $receiving_email_address;
-  $contact->from_name = $_POST['name'];
-  $contact->from_email = $_POST['email'];
-  $contact->subject = $_POST['subject'];
-
-  // Uncomment below code if you want to use SMTP to send emails. You need to enter your correct SMTP credentials
-  /*
-  $contact->smtp = array(
-    'host' => 'example.com',
-    'username' => 'example',
-    'password' => 'pass',
-    'port' => '587'
+  $data = array(
+      'fields' => array(
+          'name' => $name,
+          'email' => $email,
+      ),
   );
-  */
 
-  $contact->add_message( $_POST['name'], 'From');
-  $contact->add_message( $_POST['email'], 'Email');
-  $contact->add_message( $_POST['message'], 'Message', 10);
+  echo "hey";
 
-  echo $contact->send();
+//   $curl = "curl --request POST \
+//    --url https://api.airtable.com/v0/' . $base_id .'/' . $table_name .' \
+//    --header 'authorization: Bearer '. '$access_token' . \
+//    --header 'content-type: application/json' \
+//    --data '{\"fields\": {\"name\": \"$name\", \"email\": \"$email\"}}'
+// ";
+
+
+$curl = "curl -X POST https://api.airtable.com/v0/app6HRkzWCCseRIBS/tblEYuTQ7pa3Y35GR \
+   -H 'Authorization: Bearer e44dc61e91f4b892933b905641f6b6dad8459a9508853aad81bff995852b20a3' \
+   -H 'Content-Type: application/json' \
+   --data '{
+   \"records\": [
+     {
+       \"fields\": {\"name\": \"$name\", \"email\": \"$email\"}
+      },
+      ]
+    }'";
+    // \"fields\": {\"name\": $name, \"email\": $email}
+
+$response = exec($curl);
+
+$response = json_decode($response, true);
+
+echo json_encode($response);
+
+foreach ($response["records"] as $base) {
+    echo $base["id"];
+}
+
+echo json_encode($response);
+
+if ($response === false){
+  echo "not";
+} else{
+  echo "posted";
+}
+
+
+
+  // $options = array(
+  //     'http' => array(
+  //         'header'  => "Content-type: application/json\r\n" .
+  //                     "Authorization: Bearer " . $access_token . "\r\n",
+  //         'method'  => 'POST',
+  //         'content' => json_encode($data),
+  //     ),
+  // );
+
+  // $context  = stream_context_create($options);
+  // $result = file_get_contents('https://api.airtable.com/v0/' . $base_id . '/' . $table_name, false, $context);
+
+  // if ($result === FALSE) {
+  //     echo "Error submitting form";
+  // } else {
+  //     echo "Form submitted successfully";
+  // }
+
+
+  // $name = $_POST['q5_typeA'];
+  // $email = $_POST['q4_email'];
+
+  // $table = "techle_news_letter";
+
+  // $to_form = "https://submit.jotform.com/submit/230211202653034/";
+
+  // $to_me = "codewithraf769@gmail.com";
+
+  // $subject = "New Member";
+
+  // $headers = "From: " . $email;
+
+  // $msg = "Name: ". $name . "\n" . "Have just joined the News Letter with email: " . $email .".";
+
+  // if (!empty($email) || !empty($name)){
+  //     mail($to_form);
+  // }
+
+
 ?>
