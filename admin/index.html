@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title></title>
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="../assets/vendor/bootstrap/css/bootstrap.css">
+    <!-- <link rel="stylesheet" href="assets/style/base.css"> -->
+    <script src="../assets/"></script>
+
+    <style>
+        body{
+            height: 100vh;
+            width: 100vw;
+        }
+    </style>
+</head>
+<body>
+    <div class="container-fluid h-100 w-100">
+        <div class="row h-100 px-4 p-s d-flex justify-content-center align-items-center" style="overflow-y: scroll;">
+            <div class=" card col-md-5 p-2" style="height: 300px;">
+                <div class="login-form ">
+                    <div class="text-center">
+                        <span class="fas fa-user-circle text-primary" style="font-size: 3.5em;"></span>
+                        <h1 class=" text-center mb-3">Login</h1>
+                    </div>
+                    <form id="form" action="../forms/login.php" method="post">
+                        <div class="input-group mb-3">
+                            <div class="input-group-text">Name</div>
+                            <input type="text" name="name" value="" class="form-control">
+                        </div>
+                        <div class="input-group mb-3">
+                            <div class="input-group-text">Password</div>
+                            <input value="" type="text" name="password" class="form-control">
+                        </div>
+                        <input type="submit" name="login" class=" form-control btn btn-primary mb-3" value="Login">
+                        
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="../assets/vendor/bootstrap/js/bootstrap.js" async defer></script>
+</body>
+</html>

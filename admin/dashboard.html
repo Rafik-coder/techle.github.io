@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title></title>
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="../assets/vendor/bootstrap/css/bootstrap.css">
+    <!-- <link rel="stylesheet" href="assets/style/base.css"> -->
+    <script src="../assets/"></script>
+
+    <style>
+        body{
+            height: 100vh;
+            width: 100vw;
+        }
+    </style>
+</head>
+<body>
+    <div class="container w-100 h-100" style="overflow-y: scroll">
+        <div class="row w-100 h-100 d-flex justify-content-center align-items-center">
+            <div class=" col-sm-11 col-md-6">
+                <form id="form" action="../app/views/admin/dash.php" method="post">
+                    <div class="input-group mb-3">
+                        <div class="input-group-text">Title</div>
+                        <input type="text" id="title" name="title" value="" class="form-control">
+                    </div>
+                    <div class="input-group mb-3">
+                        <input type="file" id="image" name="image" value="" class="form-control">
+                    </div>
+                    <div class="input-group mb-3">
+                        <div class="input-group-text">Link</div>
+                        <input value="" id="link" type="text" name="course_link" class="form-control">
+                    </div>
+                    <div class="input-group mb-3">
+                        <div class="input-group-text">App type</div>
+                        <select  name="category" required id="category" class="form-control">
+                            <option value="">Chooce...</option>
+                            <option value="Bussiness">Bussiness</option>
+                            <option value="Programing">Programing</option>
+                            <option value="Other">Other</option>
+                        </select>
+                    </div>
+                    <div class="input-group mb-3">
+                        <div class="input-group-text w-100">Post Text</div>
+                        <!-- <input value="" type="password" name="passwrd" class="form-control"> -->
+                        <textarea name="post_data" id="post_data" class="w-100 form-control" rows="7"></textarea>
+                    </div>
+                    <input type="submit" name="add_post" class=" form-control btn-primary mb-3" value="Post">
+                </form>
+            </div>
+        </div>
+    </div>
+    
+    <script>
+        // const fs = require('fs');
+        // import fs from "fs";
+        const form = document.querySelector("#form");
+
+        form.addEventListener("submit", function(event){
+            let title = document.querySelector("#title");
+            let image = document.querySelector("#image");
+            let link = document.querySelector("#link");
+            let category = document.querySelector("#category");
+            let post = document.querySelector("#post_data");
+
+            // let myArray = [1, 2, 3, 4, 5];
+
+            console.log("listening");
+                
+            let array = [
+                title.value,
+                image.value,
+                link.value,
+                category.value,
+                post.value,
+            ];
+
+            fetch("assets/jsons/" + category +".json", {
+                method: 'POST',
+                body: JSON.stringify({array: array}),
+                headers: { 'Content-Type': 'application/json' }
+            })
+            .then(res => res.json())
+            .then(response => console.log('Success:', JSON.stringify(response)))
+            .catch(error => console.error('Error:', error));
+
+            // let json_st = JSON.stringify(array);
+    
+            // fs.writeFile("assets/jsons/" + category +".json", json_st, 'utf8', (err) => {
+            //     if (err) throw err;
+            //     console.log('file posted');
+            // });
+        })
+
+    </script>
+
+    <!-- <script src="assets/global.js" ></script> -->
+
+    <script src="../assets/vendor/bootstrap/js/bootstrap.js" async defer></script>
+</body>
+</html>
